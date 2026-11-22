@@ -14,7 +14,7 @@ The text is a small, concrete mystery: a baker who has left one warm loaf on the
 python3 main.py
 ```
 
-It writes `/output/entry.txt` (216 Unicode characters, UTF-8, no trailing newline).
+It writes `/output/entry.txt` (216 Unicode characters, UTF-8, no trailing newline). The program is deterministic: running it twice produces byte-identical output, and it uses only the Python standard library with no network access.
 
 ---
 

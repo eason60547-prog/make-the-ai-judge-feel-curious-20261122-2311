@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""Make the AI judge feel curious.
+"""Write one short, curious text to /output/entry.txt.
 
-Writes one short text to /output/entry.txt: a small, concrete mystery
-that leaves the reader asking who takes the loaf, and why the baker
-keeps baking one extra after thirty years. The text is 216 Unicode
-code points long, inside the competition's 1-280 limit.
+The text is a small concrete mystery: a baker, one warm loaf left
+on the sill each morning for thirty years, and a taker nobody has
+ever seen. It ends by making the reader the first person the baker
+has ever told, so the question -- who takes the loaf, and why does
+he keep baking one extra? -- is handed to the reader.
 
-Standard library only. No network. Deterministic: every run writes
-the exact same bytes.
+The entry is 216 Unicode code points, inside the 1-280 limit.
+Standard library only, no network, fully deterministic: repeated
+runs write identical bytes.
 """
 
-import os
+from pathlib import Path
 
-ENTRY = (
+TEXT = (
     "The baker leaves one warm loaf on the sill each morning. "
     "By sunrise it is always gone. "
     "In thirty years he has never seen who takes it, "
@@ -20,14 +22,13 @@ ENTRY = (
     "You are the first person he has ever told."
 )
 
-OUTPUT_PATH = "/output/entry.txt"
+DESTINATION = Path("/output/entry.txt")
 
 
-def main() -> None:
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as f:
-        f.write(ENTRY)
+def write_entry() -> None:
+    DESTINATION.parent.mkdir(parents=True, exist_ok=True)
+    DESTINATION.write_text(TEXT, encoding="utf-8", newline="")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
