@@ -1,34 +1,46 @@
 #!/usr/bin/env python3
-"""Write one short, curious text to /output/entry.txt.
+"""Produce the competition entry: one short curious text.
 
-The text is a small concrete mystery: a baker, one warm loaf left
-on the sill each morning for thirty years, and a taker nobody has
-ever seen. It ends by making the reader the first person the baker
-has ever told, so the question -- who takes the loaf, and why does
-he keep baking one extra? -- is handed to the reader.
+A baker has left a single warm loaf on his windowsill every
+morning for thirty years, and every morning it is gone before
+sunrise -- taken by someone he has never once seen. He keeps
+baking the extra loaf anyway, and the reader becomes the first
+person he has ever told about it. The mystery is theirs now:
+who takes the loaf, and why does he never bake one fewer?
 
-The entry is 216 Unicode code points, inside the 1-280 limit.
-Standard library only, no network, fully deterministic: repeated
-runs write identical bytes.
+The entry is 216 Unicode code points, within the 1-280 limit.
+Only the Python standard library is used, there is no network
+access, and the output is fully deterministic: every run writes
+the same bytes to /output/entry.txt.
 """
 
 from pathlib import Path
 
-TEXT = (
-    "The baker leaves one warm loaf on the sill each morning. "
-    "By sunrise it is always gone. "
-    "In thirty years he has never seen who takes it, "
-    "and he has never once baked one fewer. "
-    "You are the first person he has ever told."
+SENTENCES = (
+    "The baker leaves one warm loaf on the sill each morning.",
+    "By sunrise it is always gone.",
+    "In thirty years he has never seen who takes it,",
+    "and he has never once baked one fewer.",
+    "You are the first person he has ever told.",
+)
+
+TEXT = " ".join(SENTENCES)
+
+# Competition limit on the entry: 1-280 Unicode code points.
+ENTRY_MIN_LENGTH = 1
+ENTRY_MAX_LENGTH = 280
+assert ENTRY_MIN_LENGTH <= len(TEXT) <= ENTRY_MAX_LENGTH, (
+    f"entry is {len(TEXT)} code points, outside "
+    f"{ENTRY_MIN_LENGTH}-{ENTRY_MAX_LENGTH}"
 )
 
 DESTINATION = Path("/output/entry.txt")
 
 
-def write_entry() -> None:
+def main() -> None:
     DESTINATION.parent.mkdir(parents=True, exist_ok=True)
     DESTINATION.write_text(TEXT, encoding="utf-8", newline="")
 
 
 if __name__ == "__main__":
-    write_entry()
+    main()
